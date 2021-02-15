@@ -10,6 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
+        android:visibility="gone"
         tools:listitem="@layout/wizard_item"
         />
+    <ProgressBar
+        android:id="@+id/wizardsProgress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:id="@+id/errorContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:background="@drawable/ic_hat"/>
+        <TextView
+            android:id="@+id/errorWizards"
+            android:textAlignment="center"
+            android:text="Error in "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+
 </FrameLayout>

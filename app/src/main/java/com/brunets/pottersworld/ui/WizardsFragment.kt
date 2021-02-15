@@ -8,16 +8,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.brunets.pottersworld.MainFragmentDirections
 import com.brunets.pottersworld.R
 import com.brunets.pottersworld.ui.adapter.WizardsAdapter
 import com.brunets.pottersworld.ui.model.Wizard
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_wizards.*
 
 
 class WizardsFragment : Fragment() {
     lateinit var wizarViewModel: WizardsViewModel
+    lateinit var adapterWizards: WizardsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,12 +44,32 @@ class WizardsFragment : Fragment() {
         wizarViewModel.wizards.observe(viewLifecycleOwner, Observer { wizards ->
             recycler_wizards.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            recycler_wizards.adapter = WizardsAdapter(wizards)
+            adapterWizards = WizardsAdapter(wizards)
+            recycler_wizards.adapter = adapterWizards
+
+            adapterWizards.onItemClick = {
+                Snackbar.make(requireView(), it.name, Snackbar.LENGTH_SHORT).show()
+
+                val action = MainFragmentDirections.actionWizardsFragmentToWizardDetailsFragment(
+                    it.name,
+                    it.age,
+                    it.photo
+                )
+                Navigation.findNavController(view).navigate(action)
+            }
+
+            wizardsProgress.visibility = View.GONE
+            recycler_wizards.visibility = View.VISIBLE
 
         })
 
-        wizarViewModel.getWizards()
+        wizarViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            wizardsProgress.visibility = View.GONE
+            errorContainer.visibility = View.VISIBLE
+            errorWizards.text = it
+        })
 
+        wizarViewModel.getWizards()
 
     }
 }

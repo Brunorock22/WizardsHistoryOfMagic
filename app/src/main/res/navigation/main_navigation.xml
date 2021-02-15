@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mainFragment2">
+
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.brunets.pottersworld.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_wizardsFragment_to_wizardDetailsFragment"
+            app:destination="@id/wizardDetailsFragment">
+            <argument
+                android:name="wizardName"
+                app:argType="string" />
+            <argument
+                android:name="wizardAge"
+                app:argType="integer" />
+            <argument
+                android:name="wizardPhoto"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/wizardDetailsFragment"
+        android:name="com.brunets.pottersworld.ui.WizardDetailsFragment"
+        android:label="fragment_wizard_details"
+        tools:layout="@layout/fragment_wizard_details">
+        <action
+            android:id="@+id/action_wizardDetailsFragment_to_mainFragment"
+            app:destination="@id/mainFragment2" />
+        <argument
+            android:name="wizardName"
+            app:argType="string" />
+        <argument android:name="wizardAge"
+            app:argType="integer" />
+        <argument
+            android:name="wizardPhoto"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
