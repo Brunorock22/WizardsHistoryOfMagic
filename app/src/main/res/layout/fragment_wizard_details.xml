@@ -32,12 +32,16 @@
 
             <TextView
                 android:id="@+id/wizard_detail_age"
-                android:padding="10dp"
-                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:gravity="end"
-                />
+                android:padding="10dp"
+                android:text="Age: 25"
+                android:textAlignment="textEnd"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
             <TextView
                 android:id="@+id/wizard_detail_description"
                 android:padding="10dp"

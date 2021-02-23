@@ -25,8 +25,8 @@ class WizardDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             wizard_detail_name.text = args.wizardName
-            wizard_detail_age.text = args.wizardAge.toString()
-            wizard_detail_description.text = "Age: ${args.wizardDescription}"
+            wizard_detail_age.text = "Age: ${args.wizardAge}"
+            wizard_detail_description.text = args.wizardDescription
             wizard_detail_photo.loadImage(args.wizardPhoto)
         }
     }

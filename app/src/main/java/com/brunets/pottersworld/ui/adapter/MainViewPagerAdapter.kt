@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.brunets.pottersworld.ui.SpellsFragment
 import com.brunets.pottersworld.ui.WizardsFragment
+import org.koin.java.KoinJavaComponent.inject
 
 class MainViewPagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 2

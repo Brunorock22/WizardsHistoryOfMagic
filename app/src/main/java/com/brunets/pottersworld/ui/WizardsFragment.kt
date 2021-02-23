@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brunets.pottersworld.R
@@ -14,10 +13,11 @@ import com.brunets.pottersworld.ui.adapter.WizardsAdapter
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_wizards.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class WizardsFragment : Fragment() {
-    lateinit var wizarViewModel: WizardsViewModel
+    private val wizarViewModel by viewModel<WizardsViewModel>()
     lateinit var adapterWizards: WizardsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,6 @@ class WizardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        wizarViewModel = ViewModelProviders.of(this).get(WizardsViewModel::class.java)
 
         wizarViewModel.wizards.observe(viewLifecycleOwner, Observer { wizards ->
             recycler_wizards.layoutManager =
@@ -55,8 +54,6 @@ class WizardsFragment : Fragment() {
             }
 
             errorContainer.visibility = View.GONE
-
-            wizardsProgress.visibility = View.GONE
             recycler_wizards.visibility = View.VISIBLE
 
             swipeWizards.isRefreshing = false
@@ -69,6 +66,18 @@ class WizardsFragment : Fragment() {
             errorWizards.text = it
             swipeWizards.isRefreshing = false
 
+        })
+
+        wizarViewModel.loading.observe(viewLifecycleOwner, Observer {
+            if (it){
+                wizardsProgress.visibility = View.VISIBLE
+                errorContainer.visibility = View.GONE
+                recycler_wizards.visibility = View.GONE
+            }else{
+
+                wizardsProgress.visibility = View.GONE
+
+            }
         })
 
         wizarViewModel.getWizards()

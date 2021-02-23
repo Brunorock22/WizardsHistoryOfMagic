@@ -64,17 +64,16 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
     //Logs for requests
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
-
     implementation 'com.google.android.material:material:1.2.0-alpha04'
 
     // Current stable version
     def koin_version= "2.1.5"
+    def fragment_version = "2.1.0-alpha-3"
+
     // Koin for Android
     implementation "org.koin:koin-android:$koin_version"
-    // Koin Android Scope feature
-    implementation "org.koin:koin-android-scope:$koin_version"
-    // Koin Android ViewModel feature
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

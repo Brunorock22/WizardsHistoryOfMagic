@@ -1,21 +1,38 @@
 package com.brunets.pottersworld.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.brunets.pottersworld.data.ApiService
+import androidx.lifecycle.ViewModel
 import com.brunets.pottersworld.data.WizardRepository
 import com.brunets.pottersworld.data.model.Wizard
 import kotlinx.coroutines.*
 
-class WizardsViewModel(application: Application) : AndroidViewModel(application) {
-    var wizards = MutableLiveData<ArrayList<Wizard>>()
-    var errorMessage = MutableLiveData<String>()
-    val wizardRepository =  WizardRepository(wizards, errorMessage)
+class WizardsViewModel(private val wizardRepository: WizardRepository) : ViewModel() {
+    val wizards = MutableLiveData<ArrayList<Wizard>>()
+    val errorMessage = MutableLiveData<String>()
+    val loading = MutableLiveData<Boolean>()
 
+    private val errorHandler = CoroutineExceptionHandler { _, exception ->
+        CoroutineScope(Dispatchers.Main).launch{
+            loading.value = false
+            errorMessage.value = exception.localizedMessage
+        }
+    }
 
-    fun  getWizards() {
-        wizardRepository.getWizards()
+    fun getWizards() {
+        loading.value = true
+        CoroutineScope(Dispatchers.Main+ errorHandler).launch {
+            var response = async {
+                wizardRepository.getWizards()
+            }.await()
+            if (response is ArrayList<*>) {
+                loading.value = false
+                wizards.value = response as ArrayList<Wizard>
+            } else {
+                loading.value = false
+                errorMessage.value = response as String
+            }
+        }
+
     }
 
 
