@@ -54,18 +54,28 @@ class WizardsFragment : Fragment() {
                 Navigation.findNavController(view).navigate(action)
             }
 
+            errorContainer.visibility = View.GONE
+
             wizardsProgress.visibility = View.GONE
             recycler_wizards.visibility = View.VISIBLE
 
+            swipeWizards.isRefreshing = false
         })
 
         wizarViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             wizardsProgress.visibility = View.GONE
+            recycler_wizards.visibility = View.GONE
             errorContainer.visibility = View.VISIBLE
             errorWizards.text = it
+            swipeWizards.isRefreshing = false
+
         })
 
         wizarViewModel.getWizards()
+
+        swipeWizards.setOnRefreshListener {
+            wizarViewModel.getWizards()
+        }
 
     }
 }
