@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/mainFragment2"
-        android:name="com.brunets.pottersworld.MainFragment"
+        android:name="com.brunets.pottersworld.ui.MainViewPagerFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/view_pager_main_fragment">
         <action
             android:id="@+id/action_wizardsFragment_to_wizardDetailsFragment"
             app:destination="@id/wizardDetailsFragment">
@@ -21,6 +21,9 @@
                 app:argType="integer" />
             <argument
                 android:name="wizardPhoto"
+                app:argType="string" />
+            <argument
+                android:name="wizardDescription"
                 app:argType="string" />
         </action>
     </fragment>
@@ -39,6 +42,9 @@
             app:argType="integer" />
         <argument
             android:name="wizardPhoto"
+            app:argType="string" />
+        <argument
+            android:name="wizardDescription"
             app:argType="string" />
     </fragment>
 

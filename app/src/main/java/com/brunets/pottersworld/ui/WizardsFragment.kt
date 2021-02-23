@@ -5,17 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.brunets.pottersworld.MainFragmentDirections
 import com.brunets.pottersworld.R
 import com.brunets.pottersworld.ui.adapter.WizardsAdapter
-import com.brunets.pottersworld.ui.model.Wizard
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_wizards.*
@@ -50,10 +45,11 @@ class WizardsFragment : Fragment() {
             adapterWizards.onItemClick = {
                 Snackbar.make(requireView(), it.name, Snackbar.LENGTH_SHORT).show()
 
-                val action = MainFragmentDirections.actionWizardsFragmentToWizardDetailsFragment(
+                val action = MainViewPagerFragmentDirections.actionWizardsFragmentToWizardDetailsFragment(
                     it.name,
                     it.age,
-                    it.photo
+                    it.photo,
+                    it.description ?: ""
                 )
                 Navigation.findNavController(view).navigate(action)
             }

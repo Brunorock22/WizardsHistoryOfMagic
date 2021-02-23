@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.brunets.pottersworld.data.ApiService
-import com.brunets.pottersworld.ui.model.Wizard
+import com.brunets.pottersworld.data.model.Wizard
 import kotlinx.coroutines.*
 
 class WizardsViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,7 +15,7 @@ class WizardsViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-    fun getWizards() {
+    fun  getWizards() {
         CoroutineScope(Dispatchers.IO + errorHandler).launch() {
             var request = ApiService.api.getFamousWizards()
             withContext(Dispatchers.Main) {

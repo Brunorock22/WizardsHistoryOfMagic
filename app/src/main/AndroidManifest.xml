@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainFragment"
+            android:name=".ui.MainViewPagerFragment"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.PottersWorld.NoActionBar">
             <intent-filter>

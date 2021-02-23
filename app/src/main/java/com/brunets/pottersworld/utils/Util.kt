@@ -1,4 +1,4 @@
-package com.brunets.pottersworld.ui
+package com.brunets.pottersworld.utils
 
 import android.widget.ImageView
 import com.brunets.pottersworld.R

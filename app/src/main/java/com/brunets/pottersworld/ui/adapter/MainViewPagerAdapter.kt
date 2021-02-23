@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.brunets.pottersworld.ui.SpellsFragment
 import com.brunets.pottersworld.ui.WizardsFragment
 
-class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
+class MainViewPagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment{

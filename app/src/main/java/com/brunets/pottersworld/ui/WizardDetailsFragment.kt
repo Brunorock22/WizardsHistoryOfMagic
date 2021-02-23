@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.navigation.fragment.navArgs
 import com.brunets.pottersworld.R
+import com.brunets.pottersworld.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_wizard_details.*
 
 class WizardDetailsFragment : Fragment() {
@@ -23,10 +23,10 @@ class WizardDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         arguments?.let {
             wizard_detail_name.text = args.wizardName
             wizard_detail_age.text = args.wizardAge.toString()
+            wizard_detail_description.text = "Age: ${args.wizardDescription}"
             wizard_detail_photo.loadImage(args.wizardPhoto)
         }
     }
