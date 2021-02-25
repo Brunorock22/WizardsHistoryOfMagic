@@ -11,7 +11,7 @@ import com.brunets.pottersworld.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_wizard_details.*
 
 class WizardDetailsFragment : Fragment() {
-    val args: WizardDetailsFragmentArgs by navArgs()
+    private val args: WizardDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

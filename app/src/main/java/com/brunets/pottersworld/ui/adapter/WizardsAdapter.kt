@@ -9,7 +9,7 @@ import com.brunets.pottersworld.utils.loadImage
 import com.brunets.pottersworld.data.model.Wizard
 import kotlinx.android.synthetic.main.wizard_item.view.*
 
-class WizardsAdapter(private val wizards: ArrayList<Wizard>): RecyclerView.Adapter<WizardsAdapter.WizardHolder>() {
+class WizardsAdapter(private val wizards: List<Wizard>): RecyclerView.Adapter<WizardsAdapter.WizardHolder>() {
 
     var onItemClick: ((Wizard) -> Unit)? = null
 

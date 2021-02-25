@@ -1,6 +1,7 @@
 package com.brunets.pottersworld
 
 import android.app.Application
+import com.brunets.pottersworld.di.databaseModule
 import com.brunets.pottersworld.di.mainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -13,7 +14,7 @@ class KoinApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@KoinApplication)
-            modules(listOf(mainModule))
+            modules(listOf(mainModule, databaseModule))
 
         }
     }
