@@ -70,7 +70,6 @@ dependencies {
 
     // Current stable version
     def koin_version= "2.1.5"
-    def fragment_version = "2.1.0-alpha-3"
 
     // Koin for Android
     implementation "org.koin:koin-android:$koin_version"
@@ -79,7 +78,6 @@ dependencies {
 
     // for room
     implementation 'androidx.room:room-ktx:2.2.1'
-
     kapt "androidx.room:room-compiler:2.2.1"
 
 

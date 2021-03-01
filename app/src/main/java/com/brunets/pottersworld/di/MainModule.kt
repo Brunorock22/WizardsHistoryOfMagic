@@ -2,11 +2,14 @@ package com.brunets.pottersworld.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 
 import com.brunets.pottersworld.data.WizardRepository
 import com.brunets.pottersworld.data.model.DataBase
 import com.brunets.pottersworld.data.model.WizardDao
+import com.brunets.pottersworld.ui.MainViewPagerFragment
+import com.brunets.pottersworld.ui.SpellsFragment
+import com.brunets.pottersworld.ui.WizardsFragment
+import com.brunets.pottersworld.ui.adapter.MainViewPagerAdapter
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,6 +21,13 @@ val mainModule = module {
     }
     single {
         WizardRepository()
+    }
+    single { MainViewPagerFragment() }
+    single { WizardsFragment() }
+    single { SpellsFragment() }
+
+    factory {
+        MainViewPagerAdapter(get(),get(),get())
     }
 
 }
