@@ -37,7 +37,7 @@ val databaseModule = module {
         return Room.databaseBuilder(
             application.applicationContext,
             DataBase::class.java, "database-wizard"
-        ).build()
+        ).fallbackToDestructiveMigrationFrom(1,2).build()
     }
 
     fun provideCountriesDao(database: DataBase): WizardDao {

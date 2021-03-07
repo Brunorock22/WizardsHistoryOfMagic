@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.view_pager_main_fragment.*
 import org.koin.android.ext.android.inject
 
 class MainViewPagerFragment : Fragment() {
-    private val adapter: MainViewPagerAdapter by inject()
+    private val wizardsFragment: WizardsFragment by inject()
+    private val spellsFragment: SpellsFragment by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,13 +26,13 @@ class MainViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pagerAdapter = adapter
+        val pagerAdapter = MainViewPagerAdapter(this, wizardsFragment, spellsFragment)
         pager.adapter = pagerAdapter
 
         TabLayoutMediator(tab_layout, pager) { tab, position ->
-            if (position == 0){
+            if (position == 0) {
                 tab.text = "Wizards"
-            }else{
+            } else {
                 tab.text = "Spells"
             }
         }.attach()

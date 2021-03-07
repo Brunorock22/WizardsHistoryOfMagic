@@ -53,7 +53,7 @@ class WizardsFragment : Fragment() {
                 val action =
                     MainViewPagerFragmentDirections.actionWizardsFragmentToWizardDetailsFragment(
                         it.name,
-                        it.age,
+                        it.age ?: 0,
                         it.photo,
                         it.description ?: ""
                     )
