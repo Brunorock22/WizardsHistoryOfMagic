@@ -23,7 +23,6 @@
                 android:id="@+id/wizard_detail_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Title Hat"
                 android:textAlignment="center"
