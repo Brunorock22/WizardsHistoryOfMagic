@@ -1,17 +1,23 @@
 package com.brunets.pottersworld.data
 
+import com.brunets.pottersworld.data.model.Wizard
+import com.google.gson.Gson
 import kotlinx.coroutines.*
 
 class WizardRepository {
 
-    suspend fun getWizards(): Any {
-        return withContext(Dispatchers.IO) {
+    suspend fun getWizards(onSuccess: (List<Wizard>) -> Unit, onError: (String) -> Unit) {
+        withContext(Dispatchers.IO) {
             var request = ApiService.api.getFamousWizards()
             withContext(Dispatchers.Main) {
                 if (request.isSuccessful) {
-                    return@withContext request.body()!!
+                    onSuccess.invoke(request.body()!!)
                 } else {
-                    return@withContext request.message()
+                    val apiError = Gson().fromJson(
+                        request.errorBody()?.charStream()?.readText(),
+                        APIError::class.java
+                    )
+                    onError.invoke(apiError.message)
                 }
             }
         }

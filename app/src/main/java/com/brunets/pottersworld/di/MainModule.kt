@@ -30,6 +30,7 @@ val mainModule = module {
         MainViewPagerAdapter(get(),get(),get())
     }
 
+
 }
 val databaseModule = module {
 

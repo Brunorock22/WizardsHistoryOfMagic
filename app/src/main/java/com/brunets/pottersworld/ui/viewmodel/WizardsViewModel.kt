@@ -21,37 +21,34 @@ class WizardsViewModel(private val wizardRepository: WizardRepository, private v
     }
 
     fun getWizards() {
-        CoroutineScope(Dispatchers.IO+ errorHandler).launch {
-            getWizardsDataFromCache()
+        CoroutineScope(Dispatchers.IO + errorHandler).launch {
+            verifyWizardsFromDB()
         }
     }
 
-    suspend fun requestWizards() {
-        loading.postValue( true)
-        var response = withContext(Dispatchers.IO) {
-            wizardRepository.getWizards()
-        }
-        withContext(Dispatchers.Main){
-
-        if (response is ArrayList<*>) {
-            loading.value = false
-            wizards.value = response as ArrayList<Wizard>
-            saveWizards(wizards.value!!)
-        } else {
-            loading.value = false
-            errorMessage.value = response as String
-        }
-        }
-
+    private suspend fun requestWizards() {
+        loading.postValue(true)
+        wizardRepository.getWizards(
+            onSuccess = {
+                wizards.value = it
+                loading.value = false
+                saveWizards(it)
+            }, onError = {
+                loading.value = false
+                errorMessage.value = it
+            }
+        )
     }
 
-    private suspend fun saveWizards(wizards: List<Wizard>) {
-        dao.deleteAll()
-        dao.insertAll(wizard = wizards)
+
+    private fun saveWizards(wizards: List<Wizard>) {
+        CoroutineScope(Dispatchers.IO + errorHandler).launch {
+            dao.deleteAll()
+            dao.insertAll(wizard = wizards)
+        }
     }
 
-    private suspend fun getWizardsDataFromCache() {
-        return withContext(Dispatchers.IO) {
+    private suspend fun verifyWizardsFromDB() {
             val wizardsDataBase = dao.findAll()
             if (wizardsDataBase.isEmpty()) {
                 requestWizards()
@@ -59,7 +56,7 @@ class WizardsViewModel(private val wizardRepository: WizardRepository, private v
                 loading.postValue(false)
                 wizards.postValue(wizardsDataBase)
             }
-        }
+
 
     }
 }
