@@ -2,12 +2,15 @@ package com.brunets.pottersworld.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.brunets.pottersworld.data.WizardRepository
+import repository.WizardRepositoryImpl
 import com.brunets.pottersworld.data.model.Wizard
 import com.brunets.pottersworld.data.model.WizardDao
+import entities.WizardData
 import kotlinx.coroutines.*
+import repository.WizardRepository
+import usecases.WizardUseCases
 
-class WizardsViewModel(private val wizardRepository: WizardRepository, private val dao: WizardDao) :
+class WizardsViewModel(private val useCases: WizardUseCases, private val dao: WizardDao) :
     ViewModel() {
     val wizards = MutableLiveData<List<Wizard>>()
     val errorMessage = MutableLiveData<String>()
@@ -21,37 +24,38 @@ class WizardsViewModel(private val wizardRepository: WizardRepository, private v
     }
 
     fun getWizards() {
-        CoroutineScope(Dispatchers.IO+ errorHandler).launch {
-            getWizardsDataFromCache()
+        CoroutineScope(Dispatchers.IO + errorHandler).launch {
+            verifyWizardsFromDB()
         }
     }
 
-    suspend fun requestWizards() {
-        loading.postValue( true)
-        var response = withContext(Dispatchers.IO) {
-            wizardRepository.getWizards()
-        }
-        withContext(Dispatchers.Main){
+    private suspend fun requestWizards() {
+        loading.postValue(true)
+        useCases.requestWizards(
+            onSuccess = { wizardsData ->
+                val nameMap: List<Wizard> = wizardsData.map { Wizard(it.name,it.photo, it.age, it.description) }
 
-        if (response is ArrayList<*>) {
-            loading.value = false
-            wizards.value = response as ArrayList<Wizard>
-            saveWizards(wizards.value!!)
-        } else {
-            loading.value = false
-            errorMessage.value = response as String
-        }
-        }
-
+                wizardsData.map {
+                    Wizard.convetData(it) }
+                wizards.value = nameMap
+                loading.value = false
+                saveWizards(nameMap)
+            }, onError = {
+                loading.value = false
+                errorMessage.value = it
+            }
+        )
     }
 
-    private suspend fun saveWizards(wizards: List<Wizard>) {
-        dao.deleteAll()
-        dao.insertAll(wizard = wizards)
+
+    private fun saveWizards(wizards: List<Wizard>) {
+        CoroutineScope(Dispatchers.IO + errorHandler).launch {
+            dao.deleteAll()
+            dao.insertAll(wizard = wizards)
+        }
     }
 
-    private suspend fun getWizardsDataFromCache() {
-        return withContext(Dispatchers.IO) {
+    private suspend fun verifyWizardsFromDB() {
             val wizardsDataBase = dao.findAll()
             if (wizardsDataBase.isEmpty()) {
                 requestWizards()
@@ -59,7 +63,7 @@ class WizardsViewModel(private val wizardRepository: WizardRepository, private v
                 loading.postValue(false)
                 wizards.postValue(wizardsDataBase)
             }
-        }
+
 
     }
 }

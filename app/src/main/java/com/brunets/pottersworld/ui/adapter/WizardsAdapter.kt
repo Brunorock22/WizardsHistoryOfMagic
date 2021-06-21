@@ -36,11 +36,6 @@ class WizardsAdapter(private val wizards: List<Wizard>): RecyclerView.Adapter<Wi
         val binding = (holder as WizardHolder).binding
         binding?.wizard = wizards[position]
         binding?.executePendingBindings()
-//
-//        holder.itemView.wizard_name.text = wizards[position].name
-//        holder.itemView.wizard_age.text = wizards[position].age.toString()
-//        holder.itemView.wizad_photo.loadImage(wizards[position].photo)
-
 
     }
 }

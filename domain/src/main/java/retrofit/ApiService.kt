@@ -1,4 +1,4 @@
-package com.brunets.pottersworld.data
+package retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
