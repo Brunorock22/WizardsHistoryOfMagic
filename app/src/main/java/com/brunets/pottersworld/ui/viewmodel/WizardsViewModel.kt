@@ -2,12 +2,15 @@ package com.brunets.pottersworld.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.brunets.pottersworld.data.WizardRepository
+import repository.WizardRepositoryImpl
 import com.brunets.pottersworld.data.model.Wizard
 import com.brunets.pottersworld.data.model.WizardDao
+import entities.WizardData
 import kotlinx.coroutines.*
+import repository.WizardRepository
+import usecases.WizardUseCases
 
-class WizardsViewModel(private val wizardRepository: WizardRepository, private val dao: WizardDao) :
+class WizardsViewModel(private val useCases: WizardUseCases, private val dao: WizardDao) :
     ViewModel() {
     val wizards = MutableLiveData<List<Wizard>>()
     val errorMessage = MutableLiveData<String>()
@@ -28,11 +31,15 @@ class WizardsViewModel(private val wizardRepository: WizardRepository, private v
 
     private suspend fun requestWizards() {
         loading.postValue(true)
-        wizardRepository.getWizards(
-            onSuccess = {
-                wizards.value = it
+        useCases.requestWizards(
+            onSuccess = { wizardsData ->
+                val nameMap: List<Wizard> = wizardsData.map { Wizard(it.name,it.photo, it.age, it.description) }
+
+                wizardsData.map {
+                    Wizard.convetData(it) }
+                wizards.value = nameMap
                 loading.value = false
-                saveWizards(it)
+                saveWizards(nameMap)
             }, onError = {
                 loading.value = false
                 errorMessage.value = it

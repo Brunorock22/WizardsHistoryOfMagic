@@ -1,0 +1,31 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+dependencies {
+    def dependencies = rootProject.ext.dependencies
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    //Koin
+    implementation dependencies.koin_viewmodel
+    implementation dependencies.koin_scope
+    implementation dependencies.koin
+
+    //Coroutines
+    implementation dependencies.coroutine_core
+    //GSON
+    implementation dependencies.gson
+    //Retrofit
+    implementation dependencies.retrofit
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    //Logs for requests
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+}

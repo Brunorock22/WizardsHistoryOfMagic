@@ -3,6 +3,7 @@ package com.brunets.pottersworld.di
 import android.app.Application
 import androidx.room.Room
 
+import com.brunets.pottersworld.data.WizardUseCases
 import com.brunets.pottersworld.data.model.DataBase
 import com.brunets.pottersworld.data.model.WizardDao
 import com.brunets.pottersworld.ui.MainViewPagerFragment
@@ -18,6 +19,7 @@ val mainModule = module {
     viewModel {
         WizardsViewModel(get(), get())
     }
+    single { WizardUseCases(get()) }
     single { MainViewPagerFragment() }
     single { WizardsFragment() }
     single { SpellsFragment() }

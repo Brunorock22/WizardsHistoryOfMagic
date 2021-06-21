@@ -1,12 +1,14 @@
-package com.brunets.pottersworld.data
+package repository
 
-import com.brunets.pottersworld.data.model.Wizard
 import com.google.gson.Gson
-import kotlinx.coroutines.*
+import entities.WizardData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit.APIError
+import retrofit.ApiService
 
-class WizardRepository {
-
-    suspend fun getWizards(onSuccess: (List<Wizard>) -> Unit, onError: (String) -> Unit) {
+class WizardRepositoryImpl : WizardRepository {
+    override suspend fun getWizards(onSuccess: (List<WizardData>) -> Unit, onError: (String) -> Unit) {
         withContext(Dispatchers.IO) {
             var request = ApiService.api.getFamousWizards()
             withContext(Dispatchers.Main) {

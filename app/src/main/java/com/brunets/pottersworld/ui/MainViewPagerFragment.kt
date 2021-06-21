@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.brunets.pottersworld.R
 
-import com.brunets.pottersworld.ui.adapter.MainViewPagerAdapter
+import com.brunets.pottersworld.ui.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.view_pager_main_fragment.*
 import org.koin.android.ext.android.inject
@@ -26,7 +26,7 @@ class MainViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pagerAdapter = MainViewPagerAdapter(this, wizardsFragment, spellsFragment)
+        val pagerAdapter = ViewPagerAdapter(this, wizardsFragment, spellsFragment)
         pager.adapter = pagerAdapter
 
         TabLayoutMediator(tab_layout, pager) { tab, position ->
