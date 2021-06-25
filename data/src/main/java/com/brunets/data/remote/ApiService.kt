@@ -1,5 +1,6 @@
 package retrofit
 
+import com.brunets.data.remote.api.WizardApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

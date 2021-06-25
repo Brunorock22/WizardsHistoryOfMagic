@@ -1,17 +1,12 @@
 import org.koin.dsl.module
-import repository.WizardRepository
-import repository.WizardRepositoryImpl
 import usecases.WizardUseCases
+import usecases.WizardUseCasesImpl
 
 val useCaseModule = module {
-    single {
-        WizardUseCases(
+    factory<WizardUseCases> {
+        WizardUseCasesImpl(
             repository = get()
         )
     }
 }
 
-val repositoryModule = module {
-    single<WizardRepository> { WizardRepositoryImpl() }
-
-}

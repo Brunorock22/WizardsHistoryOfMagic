@@ -9,15 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brunets.pottersworld.R
-import com.brunets.pottersworld.data.model.WizardDao
 import com.brunets.pottersworld.ui.adapter.WizardsAdapter
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_wizards.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

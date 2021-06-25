@@ -6,13 +6,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.brunets.pottersworld.R
-import com.brunets.pottersworld.data.model.Wizard
 import com.brunets.pottersworld.databinding.WizardItemBinding
+import com.brunets.pottersworld.utils.loadImage
+import entities.WizardDomain
+import kotlinx.android.synthetic.main.wizard_item.view.*
 
-class WizardsAdapter(private val wizards: List<Wizard>): RecyclerView.Adapter<WizardsAdapter.WizardHolder>() {
+class WizardsAdapter(private val wizards: List<WizardDomain>): RecyclerView.Adapter<WizardsAdapter.WizardHolder>() {
 
 
-    var onItemClick: ((Wizard) -> Unit)? = null
+    var onItemClick: ((WizardDomain) -> Unit)? = null
 
     inner class WizardHolder(var view: View):RecyclerView.ViewHolder(view){
             val binding: WizardItemBinding? = DataBindingUtil.bind(view)
@@ -34,8 +36,9 @@ class WizardsAdapter(private val wizards: List<Wizard>): RecyclerView.Adapter<Wi
 
     override fun onBindViewHolder(holder: WizardHolder, position: Int) {
         val binding = (holder as WizardHolder).binding
-        binding?.wizard = wizards[position]
-        binding?.executePendingBindings()
+        holder.itemView.wizard_name.text = wizards[position].name
+        holder.itemView.wizard_age.text = wizards[position].age.toString()
+        holder.itemView.wizad_photo.loadImage(wizards[position].photo)
 
     }
 }

@@ -1,8 +1,8 @@
 package repository
 
-import entities.WizardData
+import entities.WizardDomain
 
 
 interface WizardRepository {
-    suspend fun getWizards(onSuccess: (List<WizardData>) -> Unit, onError: (String) -> Unit)
+    suspend fun getWizards(onSuccess: (List<WizardDomain>) -> Unit, onError: (String) -> Unit)
 }

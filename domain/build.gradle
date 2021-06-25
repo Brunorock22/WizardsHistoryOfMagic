@@ -11,7 +11,6 @@ java {
 dependencies {
     def dependencies = rootProject.ext.dependencies
 
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     //Koin
     implementation dependencies.koin_viewmodel
@@ -25,7 +24,5 @@ dependencies {
     //Retrofit
     implementation dependencies.retrofit
 
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
-    //Logs for requests
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
 }

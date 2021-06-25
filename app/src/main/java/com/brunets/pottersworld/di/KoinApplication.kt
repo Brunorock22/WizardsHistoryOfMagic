@@ -1,11 +1,11 @@
 package com.brunets.pottersworld.di
 
 import android.app.Application
+import com.brunets.data.di.databaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import useCaseModule
-import repositoryModule
 
 class KoinApplication : Application() {
     override fun onCreate() {
@@ -14,7 +14,7 @@ class KoinApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@KoinApplication)
-            modules(listOf(mainModule, databaseModule, useCaseModule, repositoryModule))
+            modules(listOf(mainModule, databaseModule, useCaseModule, repositoryModule, remoteDataSourceModule))
 
         }
     }

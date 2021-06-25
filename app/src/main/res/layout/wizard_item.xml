@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="wizard"
-            type="com.brunets.pottersworld.data.model.Wizard" />
-    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
 
     android:layout_width="match_parent"
@@ -29,7 +25,6 @@
         <ImageView
             android:id="@+id/wizad_photo"
             android:scaleType="fitXY"
-            android:src="@{wizard.photo}"
             android:layout_gravity="fill_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="140dp"
@@ -40,8 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textAlignment="center"
-                android:text="@{wizard.name}"/>
+                android:textAlignment="center"/>
             <TextView
                 android:id="@+id/wizard_age"
                 android:layout_width="match_parent"

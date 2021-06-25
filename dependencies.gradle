@@ -1,5 +1,10 @@
 ext {
 
+    //Android Config
+    minSDK = 20
+    targetSDK = 28
+    compileSDK = 28
+
     kotlinVersion = '1.3.72'
 
     buildTools = '4.1.2'
@@ -13,16 +18,22 @@ ext {
 
     retrofitVersion = "2.6.0"
 
+    roomVersion = "2.2.1"
+    logInterceptorVersion = "4.2.1"
 
     dependencies = [
-            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
-            koin             : "org.koin:koin-android:$koinVersion",
-            koin_scope       : "org.koin:koin-androidx-scope:$koinVersion",
-            koin_viewmodel   : "org.koin:koin-androidx-viewmodel:$koinVersion",
-            coroutine_core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion",
-            coroutine_android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion",
-            gson             : "com.google.code.gson:gson:$gsonVersion",
-            retrofit         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            koin                 : "org.koin:koin-android:$koinVersion",
+            koin_scope           : "org.koin:koin-androidx-scope:$koinVersion",
+            koin_viewmodel       : "org.koin:koin-androidx-viewmodel:$koinVersion",
+            coroutine_core       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion",
+            coroutine_android    : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion",
+            gson                 : "com.google.code.gson:gson:$gsonVersion",
+            retrofitGsonConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            retrofit             : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            room                 : "androidx.room:room-ktx:$roomVersion",
+            roomCompiler         : "androidx.room:room-compiler:$roomVersion",
 
+            logInterceptopr      : "com.squareup.okhttp3:logging-interceptor:$logInterceptorVersion"
     ]
 }

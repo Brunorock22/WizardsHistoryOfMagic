@@ -1,13 +1,19 @@
 package usecases
 
-import entities.WizardData
+import entities.WizardDomain
 import repository.WizardRepository
 
-
-class WizardUseCases(private val repository: WizardRepository) {
-
+interface WizardUseCases{
     suspend fun requestWizards(
-        onSuccess: (List<WizardData>) -> Unit,
+        onSuccess: (List<WizardDomain>) -> Unit,
+        onError: (String?) -> Unit
+    )
+}
+
+class WizardUseCasesImpl(private val repository: WizardRepository): WizardUseCases {
+
+    override suspend fun requestWizards(
+        onSuccess: (List<WizardDomain>) -> Unit,
         onError: (String?) -> Unit
     ) {
         repository.getWizards(
