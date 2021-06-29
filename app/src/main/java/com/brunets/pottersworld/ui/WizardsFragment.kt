@@ -11,19 +11,16 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brunets.pottersworld.R
 import com.brunets.pottersworld.ui.adapter.WizardsAdapter
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
+import com.brunets.pottersworld.utils.visible
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_wizards.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class WizardsFragment : Fragment() {
-    private val wizarViewModel by viewModel<WizardsViewModel>()
+    private val viewModel by viewModel<WizardsViewModel>()
     lateinit var adapterWizards: WizardsAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+  
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +33,7 @@ class WizardsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        wizarViewModel.wizards.observe(viewLifecycleOwner, Observer { wizards ->
+        viewModel.wizards.observe(viewLifecycleOwner, Observer { wizards ->
             recycler_wizards.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapterWizards = WizardsAdapter(wizards)
@@ -55,22 +52,22 @@ class WizardsFragment : Fragment() {
                 Navigation.findNavController(view).navigate(action)
             }
 
-            errorContainer.visibility = View.GONE
-            recycler_wizards.visibility = View.VISIBLE
+            errorContainer.visible(false)
+            recycler_wizards.visible(true)
 
             swipeWizards.isRefreshing = false
         })
 
-        wizarViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            wizardsProgress.visibility = View.GONE
-            recycler_wizards.visibility = View.GONE
-            errorContainer.visibility = View.VISIBLE
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            wizardsProgress.visible(false)
+            recycler_wizards.visible(false)
+            errorContainer.visible(true)
             errorWizards.text = it
             swipeWizards.isRefreshing = false
 
         })
 
-        wizarViewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
             if (it) {
                 wizardsProgress.visibility = View.VISIBLE
                 errorContainer.visibility = View.GONE
@@ -82,10 +79,10 @@ class WizardsFragment : Fragment() {
             }
         })
 
-        wizarViewModel.getWizards()
+        viewModel.getWizards()
 
         swipeWizards.setOnRefreshListener {
-            wizarViewModel.getWizards()
+            viewModel.getWizards()
         }
 
     }

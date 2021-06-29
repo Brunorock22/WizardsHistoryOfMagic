@@ -1,6 +1,6 @@
 package com.brunets.pottersworld.utils
 
-import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.brunets.pottersworld.R
@@ -39,4 +39,8 @@ fun setImageUrl(view: ImageView, url: String?) {
 
     Glide.with(view.context).setDefaultRequestOptions(options).load(url)
         .into(view)
+}
+
+fun View.visible(visible: Boolean = false) {
+    visibility = if (visible) View.VISIBLE else View.GONE
 }

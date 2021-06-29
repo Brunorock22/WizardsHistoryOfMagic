@@ -6,22 +6,23 @@ import com.brunets.data.remote.source.RemoteWizardDataSource
 import entities.WizardDomain
 import repository.WizardRepository
 import responses.ResultRemote
+import responses.ResultRequired
 
 class WizardRepositoryImpl(
     private val remoteWizardWizardDataSource: RemoteWizardDataSource,
     private val wizardDao: WizardDao
 ) : WizardRepository {
     override suspend fun getWizards(
-        onSuccess: (List<WizardDomain>) -> Unit,
-        onError: (String) -> Unit
-    ) {
 
-        when (val dataSourceResult = remoteWizardWizardDataSource.getWizardsPlaylod()) {
+    ): ResultRequired<List<WizardDomain>> {
+
+        return when (val dataSourceResult = remoteWizardWizardDataSource.getWizardsPlaylod()) {
             is ResultRemote.Success -> {
-                onSuccess.invoke(WizardRemoteMapper.mapList(dataSourceResult.response))
+                val wizardMapper = WizardRemoteMapper.mapList(dataSourceResult.response)
+                ResultRequired.Success(wizardMapper)
             }
             is ResultRemote.ErrorResponse -> {
-                onError.invoke(dataSourceResult.throwable.localizedMessage)
+                ResultRequired.Error(dataSourceResult.throwable)
             }
         }
     }

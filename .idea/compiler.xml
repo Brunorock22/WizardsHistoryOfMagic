@@ -2,8 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="PottersWorld.app" target="1.8" />
-      <module name="PottersWorld.data" target="1.8" />
+      <module name="PottersWorld.app" target="11" />
+      <module name="PottersWorld.data" target="11" />
+      <module name="PottersWorld.fakelibfinal" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

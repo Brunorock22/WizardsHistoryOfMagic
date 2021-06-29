@@ -1,8 +1,9 @@
 package repository
 
 import entities.WizardDomain
+import responses.ResultRequired
 
 
 interface WizardRepository {
-    suspend fun getWizards(onSuccess: (List<WizardDomain>) -> Unit, onError: (String) -> Unit)
+    suspend fun getWizards(): ResultRequired<List<WizardDomain>>
 }

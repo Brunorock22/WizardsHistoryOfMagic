@@ -24,15 +24,17 @@ class WizardsViewModel(
     fun getWizards() {
         CoroutineScope(Dispatchers.IO + errorHandler).launch {
             loading.postValue(true)
-            useCases.requestWizards(
-                onSuccess = { wizardsData ->
-                    wizards.postValue(wizardsData)
+//            val toast = FakeToaster
+            when (val result = useCases.requestWizards()) {
+                is WizardUseCases.ResultWizards.Wizards -> {
+                    wizards.postValue(result.list)
                     loading.postValue(false)
-                }, onError = {
-                    loading.postValue(false)
-                    errorMessage.postValue(it)
                 }
-            )
+                is WizardUseCases.ResultWizards.Error -> {
+                    loading.postValue(false)
+                    errorMessage.postValue(result.throwable.localizedMessage)
+                }
+            }
         }
     }
 
