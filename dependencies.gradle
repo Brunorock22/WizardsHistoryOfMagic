@@ -34,6 +34,13 @@ ext {
             room                 : "androidx.room:room-ktx:$roomVersion",
             roomCompiler         : "androidx.room:room-compiler:$roomVersion",
 
-            logInterceptopr      : "com.squareup.okhttp3:logging-interceptor:$logInterceptorVersion"
+            logInterceptopr      : "com.squareup.okhttp3:logging-interceptor:$logInterceptorVersion",
+
+    ]
+
+    tests = [
+            testing              : "androidx.arch.core:core-testing:1.1.1",
+            mockito : "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+
     ]
 }

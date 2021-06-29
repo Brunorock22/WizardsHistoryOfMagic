@@ -12,6 +12,7 @@ import com.brunets.pottersworld.R
 import com.brunets.pottersworld.ui.adapter.WizardsAdapter
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
 import com.brunets.pottersworld.utils.visible
+import com.example.fakelibrary.FakeToaster
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_wizards.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,6 +55,9 @@ class WizardsFragment : Fragment() {
 
             errorContainer.visible(false)
             recycler_wizards.visible(true)
+
+            val fake = FakeToaster
+            fake.showJoke(requireContext())
 
             swipeWizards.isRefreshing = false
         })
