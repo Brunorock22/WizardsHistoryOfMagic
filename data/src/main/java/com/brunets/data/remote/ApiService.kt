@@ -1,4 +1,4 @@
-package retrofit
+package com.brunets.data.remote
 
 import com.brunets.data.remote.api.WizardApi
 import okhttp3.OkHttpClient
@@ -23,6 +23,7 @@ object ApiService {
                     .create()
             ).build()
     }
+
     var api: WizardApi = initRetrofit().create(WizardApi::class.java)
 
 }

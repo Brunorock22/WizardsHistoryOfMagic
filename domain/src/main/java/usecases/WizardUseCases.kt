@@ -8,10 +8,12 @@ import responses.ResultRequired
 interface WizardUseCases {
     suspend fun requestWizards(): ResultWizards
 
+    suspend fun fetchWizards(): Flow<ResultRequired<List<WizardDomain>>>
+
     sealed class ResultWizards {
         data class Wizards(val list: List<WizardDomain>) : ResultWizards()
         object NoWizards : ResultWizards()
-        data class  Error(val throwable: Throwable) : ResultWizards()
+        data class Error(val throwable: Throwable) : ResultWizards()
     }
 }
 
@@ -21,7 +23,7 @@ class WizardUseCasesImpl(private val repository: WizardRepository) : WizardUseCa
     ): WizardUseCases.ResultWizards {
         return when (val response = repository.getWizards()) {
             is ResultRequired.Success -> {
-                when{
+                when {
                     response.result.isEmpty() -> WizardUseCases.ResultWizards.NoWizards
                     else -> WizardUseCases.ResultWizards.Wizards(response.result)
                 }
@@ -33,5 +35,9 @@ class WizardUseCasesImpl(private val repository: WizardRepository) : WizardUseCa
             }
 
         }
+    }
+
+    override suspend fun fetchWizards(): Flow<ResultRequired<List<WizardDomain>>> {
+        return repository.getWizardsLocal()
     }
 }

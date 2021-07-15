@@ -18,8 +18,8 @@ class WizardsAdapter(private val wizards: List<WizardDomain>): RecyclerView.Adap
 
     inner class WizardHolder(var view: View):RecyclerView.ViewHolder(view){
             val binding: WizardItemBinding? = DataBindingUtil.bind(view)
-        init {
 
+        init {
             view.setOnClickListener {
                 onItemClick?.invoke(wizards[adapterPosition])
             }

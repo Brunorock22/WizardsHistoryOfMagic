@@ -2,8 +2,14 @@ package com.brunets.pottersworld.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import entities.WizardDomain
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import responses.ResultRequired
 import usecases.WizardUseCases
 
 class WizardsViewModel(
@@ -21,17 +27,32 @@ class WizardsViewModel(
         }
     }
 
-    fun getWizards() {
-        CoroutineScope(Dispatchers.IO + errorHandler).launch {
+    fun getLocalWizards() {
+        viewModelScope.launch((Dispatchers.IO + errorHandler)) {
             loading.postValue(true)
-            feedFields(useCases.requestWizards())
+            useCases.fetchWizards().collect { cached ->
+                when (cached) {
+                    is ResultRequired.Success -> feedFields(
+                        WizardUseCases.ResultWizards.Wizards(
+                            cached.result
+                        )
+                    )
+                    is ResultRequired.Error -> feedFields(WizardUseCases.ResultWizards.Error(cached.throwable))
+                }
+            }
+        }
+    }
+
+    fun getRemoteWizards() {
+        viewModelScope.launch((Dispatchers.IO + errorHandler)) {
+            useCases.requestWizards()
         }
     }
 
     fun feedFields(result: WizardUseCases.ResultWizards) {
         when (result) {
             is WizardUseCases.ResultWizards.Wizards -> {
-                wizards.value = (result.list)
+                wizards.postValue(result.list)
                 loading.postValue(false)
             }
             is WizardUseCases.ResultWizards.Error -> {

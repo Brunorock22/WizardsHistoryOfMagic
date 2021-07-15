@@ -10,6 +10,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/wizard_card"
         android:layout_width="170dp"
         android:layout_height="180dp"
         android:layout_margin="10dp"

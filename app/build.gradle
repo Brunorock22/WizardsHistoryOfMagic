@@ -45,6 +45,7 @@ android {
 dependencies {
     def dependencies = rootProject.ext.dependencies
     def testDepencies = rootProject.ext.tests
+    def fragment_version = "1.3.4"
 
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -82,9 +83,6 @@ dependencies {
     implementation dependencies.koin
 
 
-
-
-
     //Data binding
     kapt 'com.android.databinding:compiler:3.1.3'
 
@@ -92,10 +90,23 @@ dependencies {
     implementation project(":data")
 
     //Unity test
-    testImplementation 'junit:junit:4..12'
+    testImplementation 'junit:junit:4.12'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation testDepencies.mockito
-    
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    // Optional -- Hamcrest library
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    // Optional -- UI testing with UI Automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+    testImplementation "com.google.truth:truth:1.1"
+
+
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+    testImplementation('io.mockk:mockk:1.9.3')
+    androidTestImplementation('io.mockk:mockk-android:1.9.3') { exclude module: 'objenesis' }
 }

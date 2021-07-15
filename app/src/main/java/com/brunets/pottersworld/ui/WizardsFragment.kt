@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class WizardsFragment : Fragment() {
-    private val viewModel by viewModel<WizardsViewModel>()
+    val viewModel by viewModel<WizardsViewModel>()
     lateinit var adapterWizards: WizardsAdapter
   
     override fun onCreateView(
@@ -83,10 +83,11 @@ class WizardsFragment : Fragment() {
             }
         })
 
-        viewModel.getWizards()
+        viewModel.getLocalWizards()
+        viewModel.getRemoteWizards()
 
         swipeWizards.setOnRefreshListener {
-            viewModel.getWizards()
+            viewModel.getRemoteWizards()
         }
 
     }

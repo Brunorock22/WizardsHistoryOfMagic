@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import entities.WizardDomain
 
-@Entity
+@Entity(tableName = "wizard_cache")
 data class WizardCache(
     val name: String,
     val photo: String,

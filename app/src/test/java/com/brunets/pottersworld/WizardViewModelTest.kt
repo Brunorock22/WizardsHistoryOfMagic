@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.brunets.pottersworld.ui.viewmodel.WizardsViewModel
 import com.nhaarman.mockitokotlin2.verify
 import entities.WizardDomain
-import kotlinx.coroutines.*
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,26 +22,49 @@ class WizardViewModelTest {
     @Mock
     private lateinit var wizardObserver: Observer<List<WizardDomain>>
 
+    @Mock
+    private lateinit var errorObserver: Observer<String>
+
     private lateinit var viewModel: WizardsViewModel
 
+    private val wizards = listOf(WizardDomain("Harry Potter", "", 0, ""))
+    private val successUseCase = MockSuccessWizardUseCase(wizards)
+    private val errorUseCase = MockFailedWizardUseCase()
 
     @Test
     fun `when view model getWizards get success then sets wizards liveData`() {
-        val wizardsList = listOf(WizardDomain("Harry Potter", "", 0, ""))
-        val mockUseCase = MockWizardUseCase(wizardsList)
 
-        viewModel = WizardsViewModel(mockUseCase)
-        viewModel.wizards.observeForever(wizardObserver)
         runBlocking {
-            viewModel.feedFields(mockUseCase.requestWizards())
-            verify(wizardObserver).onChanged(wizardsList)
+            viewModel = WizardsViewModel(successUseCase)
+            viewModel.wizards.observeForever(wizardObserver)
+            viewModel.feedFields(successUseCase.requestWizards())
+            verify(wizardObserver).onChanged(wizards)
+        }
+
+
+    }
+
+    @Test
+    fun `when viewmodel get wizards error in request set error livedata`() {
+        runBlocking {
+            viewModel = WizardsViewModel(errorUseCase)
+            viewModel.errorMessage.observeForever(errorObserver)
+            viewModel.feedFields(errorUseCase.requestWizards())
+            verify(errorObserver).onChanged("FAKE ERROR")
         }
     }
 }
 
-class MockWizardUseCase(private val list: List<WizardDomain>) : WizardUseCases {
+class MockSuccessWizardUseCase(private val list: List<WizardDomain>) : WizardUseCases {
     override suspend fun requestWizards(): WizardUseCases.ResultWizards {
         return WizardUseCases.ResultWizards.Wizards(list)
+    }
+}
+
+
+class MockFailedWizardUseCase() : WizardUseCases {
+    override suspend fun requestWizards(): WizardUseCases.ResultWizards {
+        return WizardUseCases.ResultWizards.Error(Throwable(message = "FAKE ERROR"))
     }
 
 }

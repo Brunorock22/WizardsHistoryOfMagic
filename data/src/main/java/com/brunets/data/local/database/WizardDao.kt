@@ -4,16 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.brunets.data.local.model.WizardCache
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WizardDao {
 
-    @Query("SELECT * FROM WizardCache")
-    suspend fun findAll(): List<WizardCache>
+    @Query("SELECT * FROM wizard_cache")
+    fun findAll(): Flow<List<WizardCache>>
 
     @Insert
     suspend fun insertAll(wizard: List<WizardCache>)
 
-    @Query("DELETE FROM WizardCache")
+    @Query("DELETE FROM wizard_cache")
     suspend fun deleteAll()
 }
