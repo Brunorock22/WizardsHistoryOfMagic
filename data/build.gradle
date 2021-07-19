@@ -16,6 +16,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    flavorDimensions "dev"
+    def BASE_URL = "BASE_URL"
+
+    productFlavors{
+        demo {
+            buildConfigField "String", BASE_URL, '"https://9ea55ad6-7c3c-4d9b-b8f6-0d311e8a571a.mock.pstmn.io/"'
+
+            dimension "dev"
+        }
+
+        loja {
+            buildConfigField "String", BASE_URL, '"https://PROD_FAKE/"'
+
+            dimension "dev"
+        }
+    }
 }
 
 dependencies {

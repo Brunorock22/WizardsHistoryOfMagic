@@ -24,12 +24,29 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions "dev"
+
+    productFlavors {
+        demo {
+            dimension "dev"
+            applicationIdSuffix ".demo"
+        }
+
+        loja {
+            dimension "dev"
+            applicationIdSuffix ".loja"
+
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
